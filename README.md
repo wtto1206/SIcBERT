@@ -106,6 +106,6 @@ This project relies on the `SIGA repository`LINK for fine-tuning the roBERTa mod
 *SIGA: A Naturalistic NLI Dataset of English Scalar Implicatures with Gradable Adjectives*
 
 ## Contact
-If you have any questions about this project, feel free to contact me at vittorio.ciccarelli@example.com.
+If you have any questions about this project, feel free to contact me at Vittorio.Ciccarelli@hhu.de.
 
 
