@@ -1,10 +1,10 @@
-# SIcBERT: Fine-Tuning roBERTa for Scalar Implicature Classification
+# SIcBERT: Fine-Tuning DeBERTa for Scalar Implicature Classification
 
 **by [Vittorio Ciccarelli](https://slam.phil.hhu.de/authors/vitto/)**
 
 ## Project Description
 
-This repository contains the implementation and evaluation of a fine-tuned **roBERTa** model for classifying **Scalar Implicatures (SI)**. As part of the *Advanced Python for NLP* seminar, this project focuses on testing the effectiveness of the model using a custom dataset of **Scalar Implicatures** (SIs) involving **gradable adjectives**. The model was initially fine-tuned on the **SIGA** dataset and then evaluated on our own dataset to assess its performance.
+This repository contains the implementation and evaluation of a fine-tuned **DeBERTa** model for classifying **Scalar Implicatures (SI)**. As part of the *Advanced Python for NLP* seminar, this project focuses on testing the effectiveness of the model using a custom dataset of **Scalar Implicatures** (SIs) involving **gradable adjectives**. The model was initially fine-tuned on the **SIGA** dataset and then evaluated on our own dataset to assess its performance.
 
 ## Getting Started
 
@@ -54,8 +54,8 @@ poetry run pip install torch torchvision torchaudio --index-url https://download
 (Modify the CUDA version based on your system configuration.)
 
 
-### 5. Fine-tune the roBERTa model on the SIGA dataset
-Once the environment is set up, fine-tune the roBERTa model on the SIGA dataset:
+### 5. Fine-tune the DeBERTa model on the SIGA dataset
+Once the environment is set up, fine-tune the DeBERTa model on the SIGA dataset:
 
 ```
 python cli.py train <output_model_path>
@@ -101,7 +101,7 @@ python preprocess.py
 All source code is made available under the `MIT License`. You are free to use, modify, and distribute the code, provided that you give appropriate credit to the authors. See LICENSE.md for the full license text.
 
 ### Acknowledgements
-This project relies on the `SIGA repository`LINK for fine-tuning the roBERTa model. Their dataset and code were critical for the development of this project. You can find the original SIGA repository here:
+This project relies on the `SIGA repository`LINK for fine-tuning the DeBERTa model. Their dataset and code were critical for the development of this project. You can find the original SIGA repository here:
 
 *SIGA: A Naturalistic NLI Dataset of English Scalar Implicatures with Gradable Adjectives*
 
