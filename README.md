@@ -1,4 +1,4 @@
-# SIcBERT: Fine-Tuning DeBERTa for Scalar Implicature Classification
+# SIcBERT: Scalar Implicature classification with DeBERTa
 
 **by [Vittorio Ciccarelli](https://slam.phil.hhu.de/authors/vitto/)**
 
