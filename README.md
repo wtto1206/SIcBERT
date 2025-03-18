@@ -4,7 +4,7 @@
 
 ## Project Description
 
-This repository contains the implementation and evaluation of a fine-tuned **DeBERTa** model for classifying **Scalar Implicatures (SI)**. As part of the *Advanced Python for NLP* seminar, this project focuses on testing the effectiveness of the model using a custom dataset of **Scalar Implicatures** (SIs) involving **gradable adjectives**. The model was initially fine-tuned on the **SIGA** dataset and then evaluated on our own dataset to assess its performance.
+This repository contains the implementation and evaluation of a fine-tuned **DeBERTa** model for classifying **Scalar Implicatures (SI)**. As part of the *Advanced Python for NLP* seminar, this project focuses on testing the effectiveness of the model using a custom dataset of **Scalar Implicatures** (SIs) involving **scalar expressions**. The model was initially fine-tuned on the **[SIGA](https://github.com/Rashid-Ahmed/SIGA-nli)** dataset and then evaluated on our own dataset to assess its performance.
 
 ## Getting Started
 
