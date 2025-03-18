@@ -12,7 +12,7 @@ To get started with this project, you need to clone the **SIGA** repository firs
 
 ### 1. Clone the **SIGA** repository
 
-```
+```bash
 git clone https://github.com/username/SIGA.git
 cd SIGA
 ```
@@ -35,7 +35,7 @@ Ensure you have **Python 3.9.6** and **Poetry** installed on your system before 
 - Install [Poetry](https://python-poetry.org/docs/#installation) if you haven't already.
 - Navigate to the **`experiments/`** directory inside the SIGA repository and run:
 
-```
+```bash
 cd experiments
 poetry lock
 poetry install
@@ -47,7 +47,7 @@ This will create a **.venv** (virtual environment) with all the required depende
 
 By default, **Poetry** installs PyTorch for CPU usage. If you want to use GPU acceleration, install PyTorch manually inside the virtual environment:
 
-```
+```bash
 poetry run pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
 
@@ -57,51 +57,102 @@ poetry run pip install torch torchvision torchaudio --index-url https://download
 ### 5. Fine-tune the DeBERTa model on the SIGA dataset
 Once the environment is set up, fine-tune the DeBERTa model on the SIGA dataset:
 
-```
+```bash
 python cli.py train <output_model_path>
 ```
 
 This will create a fine-tuned model, which you can then use for evaluation.
 
-### 6. Clone the SIcBERT repository
-Next, clone this repository to start evaluating the fine-tuned model:
+### 6. Evaluate the fine-tuned model on the SIGA dataset
+To evaluate the model on the SIGA dataset, follow the evaluation instructions from the SIGA repository:
 
-```
-git clone https://github.com/yourusername/SIcBERT.git
-cd SIcBERT
-```
-
-### 7. Install the required dependencies for this project
-If you haven’t already, install the necessary dependencies for the SIcBERT repository:
-
-```
-pip install -r requirements.txt
+```bash
+python cli.py evaluate
 ```
 
-### 8. Evaluate the fine-tuned model on our custom Scalar Implicature dataset
-Once the fine-tuned model is available, use it to evaluate on the custom dataset for Scalar Implicatures:
+(Note: By default, evaluation expects a temp folder in the `experiments` directory that contains the model checkpoint. For further information, refer to `config.py -> ModelConfig -> model_checkpoint` in the SIGA repository.
 
+### 7. Evaluate the fine-tuned model on our custom Scalar Implicature dataset
+
+#### Download and Prepare the Evaluation Dataset
+
+Instead of cloning this repository, you only need some files from it. If you want to evaluate the fine-tuned model on **our** dataset:
+
+1. Download the already processed evaluation dataset from our **data/** folder (`evaluation_dataset.csv`).
+2. If needed, you can also find the **original** dataset ([Sun et al., 2024](https://psycnet.apa.org/fulltext/2023-98265-001.html)) in `data/data.csv`.
+3. To preprocess `data.csv`, use the `data_processing.py` script located in the `scripts/` folder.
+
+#### Modify SIGA Repository Files
+
+To use `evaluation_dataset.csv`, you need to modify certain files in the **SIGA** repository:
+
+##### 1. Modify `config.py`
+   
+Navigate to:
+
+```bash
+nano ~/NLI_AP/SIGA-nli/experiments/siga_nli/config.py
 ```
-python evaluate.py --model_path <path_to_finetuned_model>
+
+Replace the `DataConfig` class with:
+
+```python
+class DataConfig(BaseModel):
+    train_data_dir: Path = Path.cwd().parent / Path("data") / "train_dataset.csv"
+    eval_data_dir: str = Path.cwd().parent / Path("data") / "evaluation_dataset_extended.csv"
+    # id_test_data_dir: str = Path.cwd().parent / Path("data") / "test_id_dataset.csv"
+    # ood_test_data_dir: str = Path.cwd().parent / Path("data") / "test_ood_dataset.csv"
+    max_token_length: Optional[int] = 256
+    padding: bool = True
+    truncation: bool = True
+    num_labels: int = 3
 ```
 
-Replace <path_to_finetuned_model> with the path to the model you fine-tuned earlier.
+##### 2. Modify `evaluate.py`
 
-### Data
-Our custom dataset consists of Scalar Implicatures that include gradable adjectives. It was used to evaluate the performance of the fine-tuned roBERTa model. The dataset is included in the `data/` folder.
+Navigate to:
 
-### Preprocessing the Data
-Ensure the data is in the correct format before evaluating the model. You can run the preprocessing script if needed:
-
+```bash
+nano ~/NLI_AP/SIGA-nli/experiments/siga_nli/evaluate.py
 ```
-python preprocess.py
+
+Modify the `evaluate` function:
+
+```python
+def evaluate(config: Config):
+    auto_config, tokenizer = initialize_tokenizer(config)
+    model = load_model(config, auto_config)
+    eval_dataset, _ = load_data(config.data.eval_data_dir, first_split=1)
+    evaluation_results = evaluate_model(eval_dataset, model, tokenizer, config.training.evaluation_metric, config)
+    logger.info(evaluation_results[config.training.evaluation_metric])
+```
+##### 3. Add the evaluation dataset
+
+Move `evaluation_dataset.csv` (downloaded from our repository) into the SIGA repository's `data/` folder:
+
+```bash
+mv /path/to/evaluation_dataset.csv ~/NLI_AP/SIGA-nli/data/
+```
+
+##### 4. Run the Evaluation
+Now, you can evaluate the fine-tuned model on our dataset:
+
+```bash
+python cli.py evaluate
+```
+
+### 8. Compare with the Non-Fine-Tuned Model
+If you also want to compare these results with a non-fine-tuned version of the model, you can use the provided notebook `eval_not_finetuned.ipynb` in the `notebooks/` folder in our repository:
+
+```bash
+notebooks/eval_not_finetuned.ipynb
 ```
 
 ### License
 All source code is made available under the `MIT License`. You are free to use, modify, and distribute the code, provided that you give appropriate credit to the authors. See LICENSE.md for the full license text.
 
 ### Acknowledgements
-This project relies on the `SIGA repository`LINK for fine-tuning the DeBERTa model. Their dataset and code were critical for the development of this project. You can find the original SIGA repository here:
+This project relies on the **[SIGA repository](https://github.com/Rashid-Ahmed/SIGA-nli)**for fine-tuning the DeBERTa model. Their dataset and code were critical for the development of this project. You can find the original SIGA repository here:
 
 *SIGA: A Naturalistic NLI Dataset of English Scalar Implicatures with Gradable Adjectives*
 
