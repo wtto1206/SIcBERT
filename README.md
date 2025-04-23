@@ -152,7 +152,7 @@ notebooks/eval_not_finetuned.ipynb
 All source code is made available under the `MIT License`. You are free to use, modify, and distribute the code, provided that you give appropriate credit to the authors. See LICENSE.md for the full license text.
 
 ### Acknowledgements
-This project relies on the **[SIGA repository](https://github.com/Rashid-Ahmed/SIGA-nli)**for fine-tuning the DeBERTa model. Their dataset and code were critical for the development of this project. You can find the original SIGA repository here:
+This project relies on the [SIGA repository](https://github.com/Rashid-Ahmed/SIGA-nli) for fine-tuning the DeBERTa model. Their dataset and code were critical for the development of this project. You can find the original SIGA repository here:
 
 *SIGA: A Naturalistic NLI Dataset of English Scalar Implicatures with Gradable Adjectives*
 
