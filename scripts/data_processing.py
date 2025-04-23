@@ -19,42 +19,41 @@ Output:
 """
 
 
-# Function to generate 500 new neutral sentence pairs
+# Function to generate 500 correct neutral sentence pairs
 def create_neutral_pairs(df, num_pairs=500, random_state=42):
+    random.seed(random_state)
     new_rows = []
+    used_pairs = set()
 
-    # Randomly sample 500 rows (or all rows if there are fewer)
-    sampled_rows = df.sample(n=min(num_pairs, len(df)), random_state=random_state)
+    # Remove existing neutral rows
+    df = df[df['label'] != 'neutral'].reset_index(drop=True)
 
-    # Shuffle the "alternative" column while ensuring different adjectives
-    shuffled_alternatives = df["alternative"].sample(frac=1, random_state=random_state).values
+    # Take unique combinations from premise + scale
+    premise_pool = df[['Scale', 'premise']].drop_duplicates().reset_index(drop=True)
 
-    for i, (idx, row) in enumerate(sampled_rows.iterrows()):
-        orig_adj = row["alternative"]
-        new_adj = random.choice(shuffled_alternatives)
+    while len(new_rows) < num_pairs:
+        i, j = random.sample(range(len(premise_pool)), 2)
+        if i == j:
+            continue
 
-        while new_adj == orig_adj:  # Ensure the new adjective is different
-            new_adj = random.choice(shuffled_alternatives)
+        premise_i = premise_pool.loc[i, 'premise']
+        premise_j = premise_pool.loc[j, 'premise']
 
-        # Modify the statement column
-        new_statement = row["statement"].replace(f"but not {orig_adj}", f"but not {new_adj}")
+        if (premise_i, premise_j) in used_pairs or (premise_j, premise_i) in used_pairs:
+            continue
 
-        # Create a new row
         new_row = {
-            "Scale": row["Scale"],
-            "premise": row["premise"],
-            "alternative": new_adj,
-            "statement": new_statement,
-            "value_mean": 3.0,
-            "label": "neutral"
+            'Scale': premise_pool.loc[i, 'Scale'],
+            'premise': premise_i,
+            'alternative': premise_pool.loc[j, 'Scale'],
+            'statement': premise_j,
+            'value_mean': 3.0,  # Optional, just for completeness
+            'label': 'neutral'
         }
+
         new_rows.append(new_row)
+        used_pairs.add((premise_i, premise_j))
 
-        # Stop if we reach 500 new pairs
-        if len(new_rows) >= num_pairs:
-            break
-
-    # Convert new rows to DataFrame and append to the original dataset
     df_neutral = pd.DataFrame(new_rows)
     df_extended = pd.concat([df, df_neutral], ignore_index=True)
 
