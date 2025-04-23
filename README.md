@@ -99,7 +99,7 @@ Replace the `DataConfig` class with:
 ```python
 class DataConfig(BaseModel):
     train_data_dir: Path = Path.cwd().parent / Path("data") / "train_dataset.csv"
-    eval_data_dir: str = Path.cwd().parent / Path("data") / "evaluation_dataset_extended.csv"
+    eval_data_dir: str = Path.cwd().parent / Path("data") / "evaluation_dataset.csv"
     # id_test_data_dir: str = Path.cwd().parent / Path("data") / "test_id_dataset.csv"
     # ood_test_data_dir: str = Path.cwd().parent / Path("data") / "test_ood_dataset.csv"
     max_token_length: Optional[int] = 256
