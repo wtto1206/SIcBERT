@@ -82,9 +82,8 @@ python cli.py evaluate
 
 Instead of cloning this repository, you only need some files from it. If you want to evaluate the fine-tuned model on **our** dataset:
 
-1. Download the already processed evaluation dataset from our **data/** folder (`evaluation_dataset.csv`).
-2. If needed, you can also find the **original** dataset ([Sun et al., 2024](https://psycnet.apa.org/fulltext/2023-98265-001.html)) in `data/data.csv`.
-3. To preprocess `data.csv`, use the `data_processing.py` script located in the `scripts/` folder.
+1. Download the already processed evaluation dataset from our `data/` folder (`evaluation_dataset.csv`).
+2. If needed, you can also find the **original** dataset ([Sun et al., 2024](https://psycnet.apa.org/fulltext/2023-98265-001.html)) in `data/data.csv` and you can preprocess `data.csv` using the `data_processing.py` script located in the `scripts/` folder to obtained the same `evaluation_dataset.csv`.
 
 #### Modify SIGA Repository Files
 
