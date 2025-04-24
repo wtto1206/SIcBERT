@@ -139,7 +139,7 @@ mv /path/to/evaluation_dataset.csv ~/NLI_AP/SIGA-nli/data/
 ##### 4. Run the Evaluation
 Now, you can evaluate the fine-tuned model on our dataset:
 
-(run this while being in the `/experiments`folder
+(run this while being in the `/experiments`folder)
 
 ```bash
 python cli.py evaluate
