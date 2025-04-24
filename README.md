@@ -66,6 +66,8 @@ This will create a fine-tuned model, which you can then use for evaluation.
 ### 6. Evaluate the fine-tuned model on the SIGA dataset
 To evaluate the model on the SIGA dataset, follow the evaluation instructions from the SIGA repository:
 
+(run this while being in the `/experiments` folder)
+
 ```bash
 python cli.py evaluate
 ```
@@ -136,6 +138,8 @@ mv /path/to/evaluation_dataset.csv ~/NLI_AP/SIGA-nli/data/
 
 ##### 4. Run the Evaluation
 Now, you can evaluate the fine-tuned model on our dataset:
+
+(run this while being in the `/experiments`folder
 
 ```bash
 python cli.py evaluate
