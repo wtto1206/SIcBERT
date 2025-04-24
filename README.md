@@ -57,6 +57,8 @@ poetry run pip install torch torchvision torchaudio --index-url https://download
 ### 5. Fine-tune the DeBERTa model on the SIGA dataset
 Once the environment is set up, fine-tune the DeBERTa model on the SIGA dataset:
 
+(run this inside the `experiments/` folder)
+
 ```bash
 python cli.py train <output_model_path>
 ```
@@ -66,7 +68,7 @@ This will create a fine-tuned model, which you can then use for evaluation.
 ### 6. Evaluate the fine-tuned model on the SIGA dataset
 To evaluate the model on the SIGA dataset, follow the evaluation instructions from the SIGA repository:
 
-(run this while being in the `/experiments` folder)
+(run this inside the `experiments/` folder)
 
 ```bash
 python cli.py evaluate
@@ -139,7 +141,7 @@ mv /path/to/evaluation_dataset.csv ~/NLI_AP/SIGA-nli/data/
 ##### 4. Run the Evaluation
 Now, you can evaluate the fine-tuned model on our dataset:
 
-(run this while being in the `/experiments`folder)
+(run this inside the `experiments/` folder)
 
 ```bash
 python cli.py evaluate
